@@ -1,0 +1,18 @@
+﻿@using WebAppAspNetMvcJs.Models
+@model Book
+
+@{
+    Layout = null;
+}
+
+
+
+<h3>Книга</h3>
+
+@using (Html.BeginForm("Create", "Books", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.EditorForModel()
+
+    <button class="btn btn-primary" onclick="PostCreate()">Сохранить</button>
+    @Html.ActionLink("Отменить", "Index", "Books", null, new { @class = "btn btn-danger" })
+}
