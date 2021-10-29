@@ -3,16 +3,19 @@
 
 @{
     Layout = null;
+    var controllerName = "Books";
+    var actionName = "Create";
+    var enctype = "multipart/form-data";
 }
 
 
 
 <h3>Книга</h3>
 
-@using (Html.BeginForm("Create", "Books", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+@using (Html.BeginForm(actionName, controllerName, FormMethod.Post, new { @enctype = enctype }))
 {
     @Html.EditorForModel()
 
-    <button class="btn btn-primary" onclick="PostCreate()">Сохранить</button>
-    @Html.ActionLink("Отменить", "Index", "Books", null, new { @class = "btn btn-danger" })
+    <button class="btn btn-primary" onclick="Post('@controllerName','@actionName', '@enctype')">Сохранить</button>
+    @Html.ActionLink("Отменить", "Index", controllerName, null, new { @class = "btn btn-danger" })
 }

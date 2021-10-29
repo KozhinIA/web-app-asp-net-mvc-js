@@ -26,10 +26,16 @@ namespace WebAppAspNetMvcJs.Controllers
         [HttpPost]
         public ActionResult Create(Author model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
-
             var db = new LibraryContext();
+
+            if (!ModelState.IsValid)
+            {
+                var authors = db.Authors.ToList();
+                ViewBag.Create = model;
+                return View("Index", authors);
+            }
+
+           
 
             db.Authors.Add(model);
             db.SaveChanges();
@@ -72,7 +78,11 @@ namespace WebAppAspNetMvcJs.Controllers
                 ModelState.AddModelError("Id", "Книга не найдена");
 
             if (!ModelState.IsValid)
-                return View(model);
+            {
+                var authors = db.Authors.ToList();
+                ViewBag.Create = model;
+                return View("Index", authors);
+            }
 
             MappingAuthor(model, author);
 

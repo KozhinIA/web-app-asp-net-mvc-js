@@ -26,10 +26,16 @@ namespace WebAppAspNetMvcJs.Controllers
         [HttpPost]
         public ActionResult Create(Genre model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            var db = new LibraryContext();
 
-            var db = new LibraryContext();                      
+            if (!ModelState.IsValid)
+            {
+                var genres = db.Genres.ToList();
+                ViewBag.Create = model;
+                return View("Index", genres);
+            }
+
+                              
 
             db.Genres.Add(model);
             db.SaveChanges();
@@ -72,7 +78,11 @@ namespace WebAppAspNetMvcJs.Controllers
                 ModelState.AddModelError("Id", "Жанр не найден");
 
             if (!ModelState.IsValid)
-                return View(model);
+            {
+                var genres = db.Genres.ToList();
+                ViewBag.Create = model;
+                return View("Index", genres);
+            }
 
             MappingGenre(model, genre);
 

@@ -1,12 +1,19 @@
 ﻿@using WebAppAspNetMvcJs.Models
 @model CurrencyType
 
+@{
+    Layout = null;
+    var controllerName = "CurrencyTypes";
+    var actionName = "Create";
+    var enctype = "application/x-www-form-urlencoded";
+}
+
 <h3>Тип валюты</h3>
 
-@using (Html.BeginForm("Create", "CurrencyTypes", FormMethod.Post))
+@using (Html.BeginForm(actionName, controllerName, FormMethod.Post, new { @enctype = enctype }))
 {
     @Html.EditorForModel()
 
-    <input type="submit" value="Сохранить" class="btn btn-primary" />
-    @Html.ActionLink("Отменить", "Index", "CurrencyTypes", null, new { @class = "btn btn-danger" })
+    <button class="btn btn-primary" onclick="Post('@controllerName','@actionName', '@enctype')">Сохранить</button>
+    @Html.ActionLink("Отменить", "Index", controllerName, null, new { @class = "btn btn-danger" })
 }

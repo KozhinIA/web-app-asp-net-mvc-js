@@ -1,14 +1,14 @@
 ﻿@using WebAppAspNetMvcJs.Models
-@model Genre
+@model Setting
 
 @{
     Layout = null;
-    var controllerName = "Genres";
-    var actionName = "Edit";
+    var controllerName = "Settings";
+    var actionName = "Create";
     var enctype = "application/x-www-form-urlencoded";
 }
 
-<h3>Жанр</h3>
+<h3>Настройка</h3>
 
 @using (Html.BeginForm(actionName, controllerName, FormMethod.Post, new { @enctype = enctype }))
 {

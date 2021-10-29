@@ -9,8 +9,6 @@ namespace WebAppAspNetMvcJs.Controllers
 {
     public class BooksController : Controller
     {
-        private readonly string _key = "123456Qq";
-
         [HttpGet]
         public ActionResult Index()
         {
@@ -32,15 +30,16 @@ namespace WebAppAspNetMvcJs.Controllers
         {
             var db = new LibraryContext();
 
+            if (model.Key != GetKey())
+                ModelState.AddModelError("Key", "Ключ для создания/изменения записи указан не верно");
+
             if (!ModelState.IsValid)
             {
                 var books = db.Books.ToList();
                 ViewBag.Create = model;
                 return View("Index", books);
             }
-                
-
-           
+                           
             model.CreateAt = DateTime.Now;
 
             if (model.BookImageFile != null)
@@ -110,7 +109,7 @@ namespace WebAppAspNetMvcJs.Controllers
             if (book == null)
                 ModelState.AddModelError("Id", "Книга не найдена");
 
-            if(model.Key != _key)
+            if(model.Key != GetKey())
                 ModelState.AddModelError("Key", "Ключ для создания/изменения записи указан не верно");
 
             if (!ModelState.IsValid)
@@ -176,6 +175,17 @@ namespace WebAppAspNetMvcJs.Controllers
                 };
             }
         }
+
+        private string GetKey()
+        {
+            var db = new LibraryContext();
+            var setting = db.Settings.FirstOrDefault(x => x.Type == SettingType.Password);
+            if (setting == null)
+                throw new Exception("Setting not found");
+
+            return setting.Value;
+        }
+
 
         [HttpGet]
         public ActionResult GetImage(int id)

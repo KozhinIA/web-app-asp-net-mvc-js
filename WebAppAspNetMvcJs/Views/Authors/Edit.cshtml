@@ -1,13 +1,21 @@
 ﻿@using WebAppAspNetMvcJs.Models
 @model Author
 
+@{
+    Layout = null;
+    var controllerName = "Authors";
+    var actionName = "Edit";
+    var enctype = "application/x-www-form-urlencoded";
+}
+
+
+
 <h3>Автор</h3>
 
-@using (Html.BeginForm("Edit", "Authors", FormMethod.Post))
+@using (Html.BeginForm(actionName, controllerName, FormMethod.Post, new { @enctype = enctype }))
 {
-    @Html.ValidationSummary()
     @Html.EditorForModel()
 
-    <input type="submit" value="Сохранить" class="btn btn-primary" />
-    @Html.ActionLink("Отменить", "Index", "Authors", null, new { @class = "btn btn-danger" })
+    <button class="btn btn-primary" onclick="Post('@controllerName','@actionName', '@enctype')">Сохранить</button>
+    @Html.ActionLink("Отменить", "Index", controllerName, null, new { @class = "btn btn-danger" })
 }

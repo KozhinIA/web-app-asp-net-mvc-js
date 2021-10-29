@@ -10,6 +10,8 @@ namespace WebAppAspNetMvcJs.Models
         public DbSet<Genre> Genres { get; set; }
         public DbSet<CurrencyType> CurrencyTypes { get; set; }
         public DbSet<Language> Languages { get; set; }
+        public DbSet<Setting> Settings { get; set; }
+        
         public LibraryContext() : base("LibraryEntity")
         { }
 

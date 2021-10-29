@@ -26,10 +26,16 @@ namespace WebAppAspNetMvcJs.Controllers
         [HttpPost]
         public ActionResult Create(Language model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            var db = new LibraryContext();
 
-            var db = new LibraryContext();                      
+            if (!ModelState.IsValid)
+            {
+                var languages = db.Languages.ToList();
+                ViewBag.Create = model;
+                return View("Index", languages);
+            }
+
+                         
 
             db.Languages.Add(model);
             db.SaveChanges();
@@ -72,7 +78,11 @@ namespace WebAppAspNetMvcJs.Controllers
                 ModelState.AddModelError("Id", "Жанр не найден");
 
             if (!ModelState.IsValid)
-                return View(model);
+            {
+                var languages = db.Languages.ToList();
+                ViewBag.Create = model;
+                return View("Index", languages);
+            }
 
             MappingLanguage(model, language);
 
